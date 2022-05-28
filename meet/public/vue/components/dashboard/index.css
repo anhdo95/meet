@@ -1,0 +1,17 @@
+.dashboard {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  max-width: 240px;
+  height: 100vh;
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+.dashboard__logo {
+  text-align: center;
+  font-size: 32px;
+}
+
+.dashboard__highlight {
+  color: var(--color-yellow);
+}
