@@ -1,0 +1,13 @@
+:root {
+  --color-primary: #0052c9;
+  --color-white: #fff;
+  --color-dark: #333;
+  --color-yellow: #e9e917;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
