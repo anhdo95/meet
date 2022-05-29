@@ -15,3 +15,9 @@
 .dashboard__highlight {
   color: var(--color-yellow);
 }
+
+.dashboard__copy-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-white);
+}
