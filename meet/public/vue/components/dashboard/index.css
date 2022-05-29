@@ -57,6 +57,7 @@
   width: 100%;
   margin-top: 0.5rem;
   padding: 0.5rem 1rem;
+  font-weight: bold;
   background-color: var(--color-primary-alpha);
   color: var(--color-white);
   border: none;
@@ -85,6 +86,12 @@
 .dashboard__video-call:hover {
   background-color: var(--color-white);
   color: var(--color-dark);
+}
+
+.dashboard__video-call--disabled {
+  cursor: not-allowed;
+  background-color: transparent !important;
+  color: var(--color-white) !important;
 }
 
 .dashboard__video-call-icon {

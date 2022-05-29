@@ -9,16 +9,23 @@ Vue.component("dashboard", {
       <div class="dashboard__personal">
         <p>Your personal code</p>
         <div class="dashboard__your-code-container">
-          <span class="dashboard__your-code">3-k38wEOV1NVuWcSAAAF</span>
+          <span class="dashboard__your-code">{{ $store.state.personalCode }}</span>
           <copy-icon class="dashboard__copy-icon" />
         </div>
       </div>
 
       <div class="dashboard__friend">
         <p>Your friend code</p>
-        <input class="dashboard__friend-code" type="text" value="1-k38wEOV1NVuWcSAAA0" />
+        <input class="dashboard__friend-code" type="text" v-model="friendCode" />
         <div class="dashboard__buttons">
-          <button class="dashboard__video-call">
+          <button 
+            :class="{
+              'dashboard__video-call': true,
+              'dashboard__video-call--disabled': isDisabled
+            }" 
+            :disabled="isDisabled"
+            @click="handleVideoCall"
+          >
             <video-call-icon class="dashboard__video-call-icon" />
             Video Call
           </button>
@@ -26,4 +33,27 @@ Vue.component("dashboard", {
       </div>
     </div>
   `,
+
+  data() {
+    return {
+      friendCode: ''
+    }
+  },
+
+  computed: {
+    isDisabled() {
+      return !this.friendCode
+    }
+  },
+  
+  methods: {
+    ...Vuex.mapMutations(['setIsCallable']),
+    handleVideoCall() {
+      // TODO: send pre-offer to verify the friend code
+      // webrtc.sendPreOffer
+
+      // TODO: receive a response from the server and decide whether it's callable or not
+      this.setIsCallable(true)
+    }
+  }
 });
