@@ -89,7 +89,7 @@
 .dashboard__video-call--disabled {
   cursor: not-allowed;
   background-color: transparent !important;
-  color: var(--color-white) !important;
+  color: var(--color-disabled) !important;
 }
 
 .dashboard__video-call-icon {

@@ -2,7 +2,7 @@ Vue.component("video-call", {
   template: `
     <div class="video-call">
       <div class="video-call__local">
-        <video class="video-call__local-video" autoplay muted playsinline></video>
+        <video ref="localVideo" class="video-call__local-video" autoplay muted playsinline></video>
       </div>
 
       <div class="video-call__remote">
@@ -45,6 +45,16 @@ Vue.component("video-call", {
       isCameraEnabled: true,
       isRecordingEnabled: false,
     };
+  },
+
+  computed: {
+    ...Vuex.mapState(["localStream"]),
+  },
+
+  mounted() {
+    if (this.localStream) {
+      this.$refs.localVideo.srcObject = this.localStream;
+    }
   },
 
   methods: {

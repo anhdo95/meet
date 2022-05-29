@@ -1,0 +1,4 @@
+const webrtc = {
+  sendPreOffer(data) {},
+};
+
