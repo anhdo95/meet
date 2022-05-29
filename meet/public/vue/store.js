@@ -1,6 +1,6 @@
 var store = new Vuex.Store({
   state: {
-    isCallable: false,
+    isCallable: true,
     personalCode: uuid.v4(),
     friendCode: null,
   },

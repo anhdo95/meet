@@ -18,3 +18,9 @@ html, body {
 * {
   box-sizing: border-box;
 }
+
+@media (min-width: 1280px) {
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}
