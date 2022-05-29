@@ -1,6 +1,6 @@
 Vue.component("video-call-icon", {
   template: `
-    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" v-on="$listeners">
       <path d="M893.44 226.88l-219.52 185.92-1.92 3.2V288a128 128 0 0 0-128-128H160a128 128 0 0 0-128 128v416a128 128 0 0 0 128 128h384a128 128 0 0 0 128-128v-128l2.24 2.24 219.2 185.92c53.44 46.4 98.56 26.24 98.56-44.16v-448c0-70.4-45.12-90.56-98.56-45.12z" />
     </svg>
   `,

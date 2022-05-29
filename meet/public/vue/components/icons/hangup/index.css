@@ -1,0 +1,15 @@
+.hangup-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+}
+
+.hangup-icon__svg {
+  width: 24px;
+  height: 24px;
+  transform: rotate(135deg);
+}
