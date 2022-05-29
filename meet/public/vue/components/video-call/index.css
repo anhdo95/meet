@@ -20,6 +20,22 @@
   width: 100%;
   height: 100%;
 }
+/* 
+.video-call__recording-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: var(--color-primary-alpha);
+  color: var(--color-white);
+  border-radius: var(--border-rounded);
+} */
+
+.video-call__stop-recording {
+  margin-left: 0.5rem;
+}
 
 .video-call__buttons {
   position: absolute;
@@ -31,6 +47,20 @@
   height: 100px;
 }
 
+.video-call__button {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-primary-alpha);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .video-call__button--invisible {
+  visibility: hidden;
+} */
+
 .video-call__icon {
   width: 24px;
   height: 24px;
@@ -38,6 +68,11 @@
 }
 
 .video-call__icon--hangup {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
+}
+
+.video-call__icon--share-screen {
+  width: 20px;
+  height: 20px;
 }

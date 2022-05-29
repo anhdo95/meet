@@ -1,39 +1,14 @@
 Vue.component("recording-icon", {
   template: `
-    <svg x="0px" y="0px" viewBox="0 0 39.989 39.989" style="enable-background:new 0 0 39.989 39.989;" xml:space="preserve" v-on="$listeners">
-      <path id="XMLID_155_" d="M19.994,0C8.952,0,0,8.952,0,19.995c0,11.043,8.952,19.994,19.994,19.994s19.995-8.952,19.995-19.994
-      C39.989,8.952,31.037,0,19.994,0z M19.994,27.745c-4.28,0-7.75-3.47-7.75-7.75s3.47-7.75,7.75-7.75s7.75,3.47,7.75,7.75
-      S24.275,27.745,19.994,27.745z"/>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
-      <g>
-      </g>
+  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+    width="48" height="48"
+    viewBox="0 0 48 48"
+    style=" fill:#000000;"
+    v-on="$listeners"
+    >
+      <circle cx="24" cy="24" r="22" fill="#e0e0e0"></circle>
+      <circle cx="24" cy="24" r="18" fill="#fff"></circle>
+      <circle cx="24" cy="24" r="11" fill="#ff1d25"></circle>
     </svg>
   `,
 });
