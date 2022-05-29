@@ -5,7 +5,7 @@ Vue.component("dashboard", {
         M<span class="dashboard__highlight">ee</span>t
       </h1>
 
-      <p class="dashboard__howto">Talk with other friend by passing your personal code to him/her</p>
+      <p class="dashboard__howto">Talk with another friend by passing your personal code to him/her</p>
       <div class="dashboard__personal">
         <p>Your personal code</p>
         <div class="dashboard__your-code-container">
