@@ -1,3 +1,43 @@
 .video-call {
-  
+  height: 100vh;
+  background-color: var(--color-primary);
+}
+
+.video-call__local {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  max-width: 25vw;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: var(--border-rounded);
+  line-height: 0;
+}
+
+.video-call__local-video,
+.video-call__remote,
+.video-call__remote-video {
+  width: 100%;
+  height: 100%;
+}
+
+.video-call__buttons {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100px;
+}
+
+.video-call__icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--color-white);
+}
+
+.video-call__icon--hangup {
+  width: 50px;
+  height: 50px;
 }

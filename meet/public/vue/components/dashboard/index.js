@@ -10,7 +10,7 @@ Vue.component("dashboard", {
         <p>Your personal code</p>
         <div class="dashboard__your-code-container">
           <span class="dashboard__your-code">{{ $store.state.personalCode }}</span>
-          <copy-icon class="dashboard__copy-icon" />
+          <copy-icon class="dashboard__copy-icon cursor-pointer" />
         </div>
       </div>
 
@@ -20,7 +20,7 @@ Vue.component("dashboard", {
         <div class="dashboard__buttons">
           <button 
             :class="{
-              'dashboard__video-call': true,
+              'cursor-pointer dashboard__video-call': true,
               'dashboard__video-call--disabled': isDisabled
             }" 
             :disabled="isDisabled"
