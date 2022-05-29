@@ -48,24 +48,14 @@ Vue.component("dashboard", {
   },
 
   methods: {
-    ...Vuex.mapMutations(["setIsCallable", "setLocalStream"]),
-
     handleCopy() {
       navigator.clipboard && navigator.clipboard.writeText(this.personalCode);
     },
 
-    async handleVideoCall() {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
+    handleVideoCall() {
+      webrtc.sendPreOffer({
+        calleeCode: this.friendCode,
       });
-      this.setLocalStream(stream);
-
-      // TODO: send pre-offer to verify the friend code
-      // webrtc.sendPreOffer
-
-      // TODO: receive a response from the server and decide whether it's callable or not
-      this.setIsCallable(true);
     },
   },
 });

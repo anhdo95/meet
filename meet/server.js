@@ -36,8 +36,33 @@ glob("public/vue/components/**/*.@(js|css)", (error, files) => {
 
 app.use(express.static("public"));
 
+const PRE_OFFER_ANSWER = {
+  NOT_FOUND: 'NOT_FOUND',
+  AVAILABLE: 'AVAILABLE',
+}
+
+const clients = new Set()
 io.on("connection", (socket) => {
-  console.log("socket :>> ", socket);
+  const log = (message) => {
+    socket.emit('log', `Message from server: ${message}`)
+  }
+
+  log(`Socket id ${socket.id} connected!`)
+  clients.add(socket.id)
+
+  socket.on('pre-offer', ({ calleeCode }) => {
+    if (clients.has(calleeCode)) {
+      log('Caller is available')
+      return socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.AVAILABLE)
+    }
+    log('Callee not found')
+    socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.NOT_FOUND)
+  })
+
+  socket.on('disconnect', () => {
+    log(`Socket id ${socket.id} disconnected!`)
+    clients.delete(socket.id)
+  })
 });
 
 server.listen(PORT, () => console.log(`Listening on ${PORT} port`));

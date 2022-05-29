@@ -5,11 +5,30 @@ Vue.component("app", {
   `,
 
   created() {
-    wss.init()
+    wss.init();
 
     wss.onConnect(() => {
       this.setPersonalCode(wss.socket.id);
-    })
+    });
+
+    wss.onLog((message) => {
+      console.log(message);
+    });
+
+    wss.onPreOfferAnswer((answer) => {
+      console.log("answer :>> ", answer);
+      switch (answer) {
+        case constants.PRE_OFFER_ANSWER.AVAILABLE:
+          this.handlePreOfferAnswer();
+          break;
+
+        case constants.PRE_OFFER_ANSWER.NOT_FOUND:
+          break;
+
+        default:
+          break;
+      }
+    });
   },
 
   computed: {
@@ -19,6 +38,23 @@ Vue.component("app", {
   },
 
   methods: {
-    ...Vuex.mapMutations(['setPersonalCode'])
+    ...Vuex.mapMutations([
+      "setLocalStream",
+      "setIsCallable",
+      "setPersonalCode",
+    ]),
+
+    async handlePreOfferAnswer() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+        this.setLocalStream(stream);
+        this.setIsCallable(true);
+      } catch (error) {
+        console.error("handlePreOfferAnswer", error);
+      }
+    },
   },
 });

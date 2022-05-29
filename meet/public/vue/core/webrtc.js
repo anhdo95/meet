@@ -1,4 +1,5 @@
 const webrtc = {
-  sendPreOffer(data) {},
+  sendPreOffer(data) {
+    wss.emitPreOffer(data);
+  },
 };
-
