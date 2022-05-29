@@ -10,7 +10,7 @@ Vue.component("dashboard", {
         <p>Your personal code</p>
         <div class="dashboard__your-code-container">
           <span class="dashboard__your-code">{{ $store.state.personalCode }}</span>
-          <copy-icon class="dashboard__copy-icon cursor-pointer" />
+          <copy-icon class="dashboard__copy-icon cursor-pointer" @click="handleCopy" />
         </div>
       </div>
 
@@ -41,6 +41,7 @@ Vue.component("dashboard", {
   },
 
   computed: {
+    ...Vuex.mapState(['personalCode']),
     isDisabled() {
       return !this.friendCode
     }
@@ -48,6 +49,11 @@ Vue.component("dashboard", {
   
   methods: {
     ...Vuex.mapMutations(['setIsCallable']),
+
+    handleCopy() {
+      navigator.clipboard && navigator.clipboard.writeText(this.personalCode);
+    },
+
     handleVideoCall() {
       // TODO: send pre-offer to verify the friend code
       // webrtc.sendPreOffer

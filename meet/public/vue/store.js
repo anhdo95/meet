@@ -1,12 +1,15 @@
 var store = new Vuex.Store({
   state: {
-    isCallable: true,
-    personalCode: uuid.v4(),
+    isCallable: false,
+    personalCode: null,
     friendCode: null,
   },
   mutations: {
     setIsCallable(state, isCallable) {
       state.isCallable = isCallable;
+    },
+    setPersonalCode(state, personalCode) {
+      state.personalCode = personalCode
     },
     setFriendCode(state, code) {
       state.friendCode = code
