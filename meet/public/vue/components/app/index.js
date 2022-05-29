@@ -5,9 +5,10 @@ Vue.component("app", {
   `,
 
   created() {
-    const socket = io.connect()
-    socket.on('connect', () => {
-      this.setPersonalCode(socket.id);
+    wss.init()
+
+    wss.onConnect(() => {
+      this.setPersonalCode(wss.socket.id);
     })
   },
 

@@ -36,30 +36,36 @@ Vue.component("dashboard", {
 
   data() {
     return {
-      friendCode: ''
-    }
+      friendCode: "",
+    };
   },
 
   computed: {
-    ...Vuex.mapState(['personalCode']),
+    ...Vuex.mapState(["personalCode"]),
     isDisabled() {
-      return !this.friendCode
-    }
+      return !this.friendCode;
+    },
   },
-  
+
   methods: {
-    ...Vuex.mapMutations(['setIsCallable']),
+    ...Vuex.mapMutations(["setIsCallable", "setLocalStream"]),
 
     handleCopy() {
       navigator.clipboard && navigator.clipboard.writeText(this.personalCode);
     },
 
-    handleVideoCall() {
+    async handleVideoCall() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      this.setLocalStream(stream);
+
       // TODO: send pre-offer to verify the friend code
       // webrtc.sendPreOffer
 
       // TODO: receive a response from the server and decide whether it's callable or not
-      this.setIsCallable(true)
-    }
-  }
+      this.setIsCallable(true);
+    },
+  },
 });
