@@ -10,15 +10,31 @@ Vue.component("video-call", {
       </div>
 
       <div class="video-call__buttons">
-        <mic-icon v-if="isMicEnabled" class="cursor-pointer video-call__icon" @click="handleMic" />
-        <mic-off-icon v-else class="cursor-pointer video-call__icon" @click="handleMic" />
+        <span v-if="isMicEnabled" class="video-call__button" @click="handleMic">
+          <mic-icon class="cursor-pointer video-call__icon" />
+        </span>
+        <span v-else class="video-call__button" @click="handleMic">
+          <mic-off-icon class="cursor-pointer video-call__icon" />
+        </span>
 
-        <camera-icon v-if="isCameraEnabled" class="cursor-pointer video-call__icon" @click="handleCamera" />
-        <camera-off-icon v-else class="cursor-pointer video-call__icon" @click="handleCamera" />
+        <span v-if="isCameraEnabled" class="video-call__button">
+          <camera-icon v-if="isCameraEnabled" class="cursor-pointer video-call__icon" @click="handleCamera" />
+        </span>
+        <span v-else class="video-call__button">
+          <camera-off-icon class="cursor-pointer video-call__icon" @click="handleCamera" />
+        </span>
 
         <hangup-icon class="cursor-pointer video-call__icon video-call__icon--hangup" />
-        <share-screen-icon class="cursor-pointer video-call__icon" />
-        <recording-icon class="cursor-pointer video-call__icon" />
+        <span class="video-call__button">
+          <share-screen-icon class="cursor-pointer video-call__icon video-call__icon--share-screen" />
+        </span>
+
+        <span v-if="isRecordingEnabled" class="video-call__button" @click="handleRecording">
+          <recording-icon class="cursor-pointer video-call__icon" />
+        </span>
+        <span v-else class="video-call__button" @click="handleRecording">
+          <record-icon class="cursor-pointer video-call__icon" />
+        </span>
       </div>
     </div>
   `,
@@ -27,6 +43,7 @@ Vue.component("video-call", {
     return {
       isMicEnabled: true,
       isCameraEnabled: true,
+      isRecordingEnabled: false,
     };
   },
 
@@ -38,5 +55,9 @@ Vue.component("video-call", {
     handleCamera() {
       this.isCameraEnabled = !this.isCameraEnabled;
     },
+
+    handleRecording() {
+      this.isRecordingEnabled = !this.isRecordingEnabled;
+    }
   },
 });
