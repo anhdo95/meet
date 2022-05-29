@@ -1,7 +1,6 @@
 .dashboard {
   background-color: var(--color-primary);
   color: var(--color-white);
-  max-width: 300px;
   height: 100vh;
   padding: 1rem;
   box-sizing: border-box;
@@ -9,10 +8,11 @@
 
 .dashboard__logo {
   text-align: center;
-  font-size: 32px;
+  font-size: 48px;
 }
 
 .dashboard__highlight {
+  font-weight: 400;
   color: var(--color-yellow);
 }
 
@@ -71,7 +71,7 @@
 .dashboard__video-call {
   display: inline-flex;
   align-items: center;
-  margin: 0.5rem auto;
+  margin: 1rem auto;
   padding: 0.5rem 1rem;
   font-weight: bold;
   background-color: transparent;
