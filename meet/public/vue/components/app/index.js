@@ -1,7 +1,10 @@
 Vue.component("app", {
   template: `
-    <video-call v-if="isCallable" />
-    <dashboard v-else />
+    <main>
+      <video-call v-if="isCallable" />
+      <dashboard v-else />
+      <modals />
+    </main>
   `,
 
   created() {
@@ -23,6 +26,7 @@ Vue.component("app", {
           break;
 
         case constants.PRE_OFFER_ANSWER.NOT_FOUND:
+          this.handleNotFound()
           break;
 
         default:
@@ -42,6 +46,8 @@ Vue.component("app", {
       "setLocalStream",
       "setIsCallable",
       "setPersonalCode",
+      "setModal",
+      "closeModal",
     ]),
 
     async handlePreOfferAnswer() {
@@ -56,5 +62,12 @@ Vue.component("app", {
         console.error("handlePreOfferAnswer", error);
       }
     },
+
+    handleNotFound() {
+      this.setModal({
+        type: constants.MODAL_TYPE.NOT_FOUND,
+        onOk: this.closeModal
+      })
+    }
   },
 });
