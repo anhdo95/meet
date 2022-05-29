@@ -1,13 +1,20 @@
 :root {
   --color-primary: #0052c9;
+  --color-primary-alpha: #3a78d4;
   --color-white: #fff;
   --color-dark: #333;
   --color-yellow: #e9e917;
+
+  --border-rounded: 6px;
 }
 
 html, body {
   height: 100%;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
+  font-weight: 400; 
+}
+
+* {
+  box-sizing: border-box;
 }

@@ -1,9 +1,9 @@
 .dashboard {
   background-color: var(--color-primary);
   color: var(--color-white);
-  max-width: 240px;
+  max-width: 300px;
   height: 100vh;
-  padding: 1rem 0;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
@@ -16,8 +16,81 @@
   color: var(--color-yellow);
 }
 
+.dashboard__howto {
+  margin-top: 2rem;
+  font-size: 14px;
+}
+
+.dashboard__personal {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background-color: var(--color-primary-alpha);
+  border-radius: var(--border-rounded);
+}
+
+.dashboard__your-code-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.dashboard__your-code {
+  width: 100%;
+  font-weight: bold;
+}
+
 .dashboard__copy-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  margin-left: 0.5rem;
   fill: var(--color-white);
+  cursor: pointer;
+}
+
+.dashboard__friend {
+  margin-top: 2rem;
+}
+
+.dashboard__friend-code {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary-alpha);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-rounded);
+  outline: none;
+}
+
+.dashboard__buttons {
+  text-align: center;
+}
+
+.dashboard__video-call {
+  display: inline-flex;
+  align-items: center;
+  margin: 0.5rem auto;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid  var(--color-primary-alpha);
+  border-radius: var(--border-rounded);
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+
+.dashboard__video-call:hover {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+}
+
+.dashboard__video-call-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+  fill: currentColor;
 }
