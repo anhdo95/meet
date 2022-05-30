@@ -25,6 +25,6 @@ const wss = {
   },
 
   emitPreOfferAnswer(data) {
-    return wss.socket.emit('pre-offer', data)
+    return wss.socket.emit('pre-offer-answer', data)
   }
 };

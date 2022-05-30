@@ -24,7 +24,7 @@ Vue.component("app", {
     /**
      * Listen to pre-offer from a caller
      */
-    wss.onPreOffer(() => {
+    wss.onPreOffer(({ callerCode }) => {
       if (this.callState === constants.CALL_STATE.AVAILABLE) {
         this.setModal({
           type: constants.MODAL_TYPE.INCOMING_CALL,
@@ -32,7 +32,10 @@ Vue.component("app", {
           onReject: this.handleCalleeReject
         })
       } else {
-        // send pre-offer-answer unavailable
+        webrtc.sendPreOfferAnswer({
+          callerCode,
+          answer: constants.PRE_OFFER_ANSWER.CALLEE_UNAVAILABLE,
+        });
       }
     })
 
@@ -47,6 +50,10 @@ Vue.component("app", {
 
         case constants.PRE_OFFER_ANSWER.CALLEE_NOT_FOUND:
           this.handleCalleeNotFound()
+          break;
+
+        case constants.PRE_OFFER_ANSWER.CALLEE_UNAVAILABLE:
+          this.handleCalleeUnavailable()
           break;
 
         default:
@@ -71,18 +78,18 @@ Vue.component("app", {
       "closeModal",
     ]),
 
-    async handlePreOffer() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
-        this.setLocalStream(stream);
-        this.setIsCallable(true);
-      } catch (error) {
-        console.error("handlePreOfferAnswer", error);
-      }
-    },
+    // async handlePreOffer() {
+    //   try {
+    //     const stream = await navigator.mediaDevices.getUserMedia({
+    //       video: true,
+    //       audio: true,
+    //     });
+    //     this.setLocalStream(stream);
+    //     this.setIsCallable(true);
+    //   } catch (error) {
+    //     console.error("handlePreOfferAnswer", error);
+    //   }
+    // },
 
     handleCalleeFound() {
       this.setModal({
@@ -94,6 +101,13 @@ Vue.component("app", {
     handleCalleeNotFound() {
       this.setModal({
         type: constants.MODAL_TYPE.NOT_FOUND,
+        onOk: this.closeModal
+      })
+    },
+
+    handleCalleeUnavailable() {
+      this.setModal({
+        type: constants.MODAL_TYPE.UNAVAILABLE,
         onOk: this.closeModal
       })
     }

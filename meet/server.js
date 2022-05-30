@@ -67,6 +67,11 @@ io.on("connection", (socket) => {
     socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.CALLEE_NOT_FOUND)
   })
 
+  socket.on('pre-offer-answer', ({ answer, callerCode }) => {
+    log(`Callee answer ${answer}`)
+    socket.to(callerCode).emit('pre-offer-answer', answer)
+  })
+
   socket.on('disconnect', () => {
     log(`Socket id ${socket.id} disconnected!`)
     clients.delete(socket.id)
