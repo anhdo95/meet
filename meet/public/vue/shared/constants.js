@@ -15,6 +15,7 @@ const constants = {
   MODAL_TYPE: {
     NOT_FOUND: "not-found-modal",
     UNAVAILABLE: "unavailable-modal",
+    PERMISSION: "permission-modal",
     CALLING: "calling-modal",
     INCOMING_CALL: "incoming-call-modal",
   }

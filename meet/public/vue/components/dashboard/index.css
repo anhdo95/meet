@@ -16,6 +16,22 @@
   color: var(--color-yellow);
 }
 
+.dashboard__video-container {
+  min-height: 150px;
+  margin-top: 2rem;
+}
+
+.dashboard__video {
+  display: block;
+  max-width: 150px;
+  min-height: 114.5px;
+  margin: 0 auto;
+  padding: 0.25rem;
+  background-color: white;
+  border-radius: var(--border-rounded);
+  line-height: 0;
+}
+
 .dashboard__howto {
   margin-top: 2rem;
   font-size: 14px;

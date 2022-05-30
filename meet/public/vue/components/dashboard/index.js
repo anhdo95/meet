@@ -5,6 +5,10 @@ Vue.component("dashboard", {
         M<span class="dashboard__highlight">ee</span>t
       </h1>
 
+      <div class="dashboard__video-container">
+        <video ref="video" class="dashboard__video" autoplay muted playsinline></video>
+      </div>
+
       <p class="dashboard__howto">Talk with another friend by passing your personal code to him/her</p>
       <div class="dashboard__personal">
         <p>Your personal code</p>
@@ -41,18 +45,52 @@ Vue.component("dashboard", {
   },
 
   computed: {
-    ...Vuex.mapState(["personalCode"]),
+    ...Vuex.mapState(["localStream", "personalCode"]),
     isDisabled() {
       return !this.friendCode;
     },
   },
 
+  mounted() {
+    this.getUserMedia();
+  },
+
   methods: {
+    ...Vuex.mapMutations([
+      "setLocalStream",
+      "setCallState",
+      "setModal",
+      "closeModal",
+    ]),
+
+    async getUserMedia() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+        this.$refs.video.srcObject = stream;
+        this.setLocalStream(stream);
+        this.setCallState(constants.CALL_STATE.AVAILABLE);
+      } catch (error) {
+        this.setCallState(constants.CALL_STATE.UNAVAILABLE);
+        console.error("getUserMedia", error);
+      }
+    },
+
     handleCopy() {
       navigator.clipboard && navigator.clipboard.writeText(this.personalCode);
     },
 
     handleVideoCall() {
+      if (!this.localStream) {
+        this.setModal({
+          type: constants.MODAL_TYPE.PERMISSION,
+          onOk: this.closeModal,
+        });
+        return;
+      }
+
       webrtc.sendPreOffer({
         calleeCode: this.friendCode,
       });

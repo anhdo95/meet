@@ -5,7 +5,7 @@ const store = new Vuex.Store({
     isCallable: false,
     personalCode: null,
     friendCode: null,
-    callState: constants.CALL_STATE.AVAILABLE,
+    callState: constants.CALL_STATE.UNAVAILABLE,
 
     localStream: null,
     remoteStream: null,
