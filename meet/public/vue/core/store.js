@@ -5,6 +5,7 @@ const store = new Vuex.Store({
     isCallable: false,
     personalCode: null,
     friendCode: null,
+    callState: constants.CALL_STATE.AVAILABLE,
 
     localStream: null,
     remoteStream: null,
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
     setIsCallable: set("isCallable"),
     setPersonalCode: set("personalCode"),
     setFriendCode: set("friendCode"),
+    setCallState: set("callState"),
     setLocalStream: set("localStream"),
     setRemoteStream: set("remoteStream"),
     setModal: set("modal"),
