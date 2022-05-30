@@ -1,0 +1,24 @@
+.not-found-modal {
+  padding: 1rem;
+}
+
+.not-found-modal__title {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.not-found-modal__buttons {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.not-found-modal__button-ok {
+  width: 80px;
+  height: 32px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-rounded);
+  outline: none;
+}

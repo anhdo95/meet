@@ -37,8 +37,11 @@ glob("public/vue/components/**/*.@(js|css)", (error, files) => {
 app.use(express.static("public"));
 
 const PRE_OFFER_ANSWER = {
-  NOT_FOUND: 'NOT_FOUND',
-  AVAILABLE: 'AVAILABLE',
+  CALLEE_NOT_FOUND: "CALLEE_NOT_FOUND",
+  CALLEE_FOUND: "CALLEE_FOUND",
+  CALLEE_ACCEPTED: "CALLEE_ACCEPTED",
+  CALLEE_REJECTED: "CALLEE_REJECTED",
+  CALLEE_UNAVAILABLE: "CALLEE_UNAVAILABLE",
 }
 
 const clients = new Set()
@@ -52,11 +55,16 @@ io.on("connection", (socket) => {
 
   socket.on('pre-offer', ({ calleeCode }) => {
     if (clients.has(calleeCode)) {
-      log('Caller is available')
-      return socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.AVAILABLE)
+      log('Callee is found')
+      socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.CALLEE_FOUND)
+      socket.to(calleeCode).emit('pre-offer', {
+        callerCode: socket.id
+      })
+      return 
     }
+    
     log('Callee not found')
-    socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.NOT_FOUND)
+    socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.CALLEE_NOT_FOUND)
   })
 
   socket.on('disconnect', () => {
