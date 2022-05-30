@@ -1,6 +1,6 @@
 Vue.component("app", {
   template: `
-    <main>
+    <main class="app">
       <video-call v-if="isCallable" />
       <dashboard v-else />
       <modals />
@@ -19,7 +19,6 @@ Vue.component("app", {
     });
 
     wss.onPreOfferAnswer((answer) => {
-      console.log("answer :>> ", answer);
       switch (answer) {
         case constants.PRE_OFFER_ANSWER.AVAILABLE:
           this.handlePreOfferAnswer();
