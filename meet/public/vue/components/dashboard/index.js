@@ -57,6 +57,7 @@ Vue.component("dashboard", {
 
   methods: {
     ...Vuex.mapMutations([
+      "setFriendCode",
       "setLocalStream",
       "setCallState",
       "setModal",
@@ -90,7 +91,7 @@ Vue.component("dashboard", {
         });
         return;
       }
-
+      this.setFriendCode(this.friendCode);
       webrtc.sendPreOffer({
         calleeCode: this.friendCode,
       });

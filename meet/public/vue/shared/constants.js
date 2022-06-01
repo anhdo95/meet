@@ -11,6 +11,12 @@ const constants = {
     CALLEE_REJECTED: "CALLEE_REJECTED",
     CALLEE_UNAVAILABLE: "CALLEE_UNAVAILABLE",
   },
+
+  SIGNALING: {
+    OFFER: 'OFFER',
+    ANSWER: 'ANSWER',
+    CANDIDATE: 'CANDIDATE',
+  },
   
   MODAL_TYPE: {
     NOT_FOUND: "not-found-modal",

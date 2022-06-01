@@ -7,6 +7,7 @@ const store = new Vuex.Store({
     friendCode: null,
     callState: constants.CALL_STATE.UNAVAILABLE,
 
+    peerConnection: null,
     localStream: null,
     remoteStream: null,
 
@@ -23,6 +24,7 @@ const store = new Vuex.Store({
     setPersonalCode: set("personalCode"),
     setFriendCode: set("friendCode"),
     setCallState: set("callState"),
+    setPeerConnection: set("peerConnection"),
     setLocalStream: set("localStream"),
     setRemoteStream: set("remoteStream"),
     setModal: set("modal"),

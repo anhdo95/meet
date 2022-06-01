@@ -21,9 +21,7 @@ glob("public/vue/components/**/*.@(js|css)", (error, files) => {
   }, "");
 
   const scripts = js.reduce((scripts, file) => {
-    return (scripts += `<script src="${replaceRootPath(
-      file
-    )}"></script>\n`);
+    return (scripts += `<script src="${replaceRootPath(file)}"></script>\n`);
   }, "");
 
   fs.readFile("public/template.html", "utf8", (error, data) => {
@@ -42,40 +40,47 @@ const PRE_OFFER_ANSWER = {
   CALLEE_ACCEPTED: "CALLEE_ACCEPTED",
   CALLEE_REJECTED: "CALLEE_REJECTED",
   CALLEE_UNAVAILABLE: "CALLEE_UNAVAILABLE",
-}
+};
 
-const clients = new Set()
+const clients = new Set();
 io.on("connection", (socket) => {
   const log = (message) => {
-    socket.emit('log', `Message from server: ${message}`)
-  }
+    socket.emit("log", `Message from server: ${message}`);
+  };
 
-  log(`Socket id ${socket.id} connected!`)
-  clients.add(socket.id)
+  log(`Socket id ${socket.id} connected!`);
+  clients.add(socket.id);
 
-  socket.on('pre-offer', ({ calleeCode }) => {
+  socket.on("pre-offer", ({ calleeCode }) => {
     if (clients.has(calleeCode)) {
-      log('Callee is found')
-      socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.CALLEE_FOUND)
-      socket.to(calleeCode).emit('pre-offer', {
-        callerCode: socket.id
-      })
-      return 
+      log("Callee is found");
+      socket.emit("pre-offer-answer", PRE_OFFER_ANSWER.CALLEE_FOUND);
+      socket.to(calleeCode).emit("pre-offer", {
+        callerCode: socket.id,
+      });
+      return;
     }
-    
-    log('Callee not found')
-    socket.emit('pre-offer-answer', PRE_OFFER_ANSWER.CALLEE_NOT_FOUND)
-  })
 
-  socket.on('pre-offer-answer', ({ answer, callerCode }) => {
-    log(`Callee answer ${answer}`)
-    socket.to(callerCode).emit('pre-offer-answer', answer)
-  })
+    log("Callee not found");
+    socket.emit("pre-offer-answer", PRE_OFFER_ANSWER.CALLEE_NOT_FOUND);
+  });
 
-  socket.on('disconnect', () => {
-    log(`Socket id ${socket.id} disconnected!`)
-    clients.delete(socket.id)
-  })
+  socket.on("pre-offer-answer", (data) => {
+    log(`Callee answer ${data.answer}`);
+    socket.to(data.callerCode).emit("pre-offer-answer", data.answer);
+  });
+
+  socket.on("signaling", (data) => {
+    log(`Send ${data.type} to peer ${data.peerCode}`);
+    if (clients.has(data.peerCode)) {
+      socket.to(data.peerCode).emit("signaling", { ...data, peerCode: socket.id });
+    }
+  });
+
+  socket.on("disconnect", () => {
+    log(`Socket id ${socket.id} disconnected!`);
+    clients.delete(socket.id);
+  });
 });
 
 server.listen(PORT, () => console.log(`Listening on ${PORT} port`));

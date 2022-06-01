@@ -6,7 +6,7 @@ Vue.component("video-call", {
       </div>
 
       <div class="video-call__remote">
-        <video class="video-call__remote-video" autoplay muted playsinline></video>
+        <video ref="remoteVideo" class="video-call__remote-video" autoplay muted playsinline></video>
       </div>
 
       <div class="video-call__buttons">
@@ -48,7 +48,18 @@ Vue.component("video-call", {
   },
 
   computed: {
-    ...Vuex.mapState(["localStream"]),
+    ...Vuex.mapState(["localStream", "remoteStream"]),
+  },
+
+  watch: {
+    remoteStream: {
+      handler(stream) {
+        if (stream) {
+          this.$refs.remoteVideo.srcObject = stream;
+        }
+      },
+    },
+    immediate: true,
   },
 
   mounted() {
@@ -68,6 +79,6 @@ Vue.component("video-call", {
 
     handleRecording() {
       this.isRecordingEnabled = !this.isRecordingEnabled;
-    }
+    },
   },
 });

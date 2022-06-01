@@ -20,11 +20,19 @@ const wss = {
     return wss.socket.on('pre-offer-answer', listener);
   },
 
+  onSignaling(listener) {
+    return wss.socket.on('signaling', listener);
+  },
+
   emitPreOffer(data) {
     return wss.socket.emit('pre-offer', data)
   },
 
   emitPreOfferAnswer(data) {
     return wss.socket.emit('pre-offer-answer', data)
+  },
+
+  emitSignaling(data) {
+    return wss.socket.emit('signaling', data)
   }
 };
