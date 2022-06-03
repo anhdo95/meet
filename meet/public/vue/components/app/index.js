@@ -50,6 +50,10 @@ Vue.component("app", {
           this.handleCalleeAccepted();
           break;
 
+        case constants.PRE_OFFER_ANSWER.CALLEE_REJECTED:
+          this.handleCalleeRejected();
+          break;
+
         case constants.PRE_OFFER_ANSWER.CALLEE_FOUND:
           this.handleCalleeFound();
           break;
@@ -132,7 +136,13 @@ Vue.component("app", {
     },
 
     handleCalleeReject(callerCode) {
-      return () => {};
+      return () => {
+        webrtc.sendPreOfferAnswer({
+          callerCode,
+          answer: constants.PRE_OFFER_ANSWER.CALLEE_REJECTED,
+        });
+        this.closeModal()
+      };
     },
 
     async handleCalleeAccepted() {
@@ -162,6 +172,13 @@ Vue.component("app", {
       this.setCallState(constants.CALL_STATE.UNAVAILABLE);
       this.closeModal();
       this.setIsCallable(true);
+    },
+
+    handleCalleeRejected() {
+      this.setModal({
+        type: constants.MODAL_TYPE.REJECTED,
+        onOk: this.closeModal,
+      });
     },
 
     handleAddRemoteStream(stream) {
