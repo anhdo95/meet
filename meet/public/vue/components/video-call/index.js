@@ -24,7 +24,7 @@ Vue.component("video-call", {
           <camera-off-icon class="cursor-pointer video-call__icon" @click="handleCamera" />
         </span>
 
-        <hangup-icon class="cursor-pointer video-call__icon video-call__icon--hangup" />
+        <hangup-icon class="cursor-pointer video-call__icon video-call__icon--hangup" @click="handleHangUp"  />
         <span class="video-call__button" @click="handleShareScreen">
           <share-screen-icon class="cursor-pointer video-call__icon video-call__icon--share-screen" />
         </span>
@@ -90,6 +90,10 @@ Vue.component("video-call", {
     handleCamera() {
       this.localStream.getVideoTracks()[0].enabled = !this.isCameraEnabled;
       this.setIsCameraEnabled(!this.isCameraEnabled);
+    },
+
+    handleHangUp() {
+      this.$emit('hang-up')
     },
 
     handleShareScreen() {
