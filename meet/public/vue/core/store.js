@@ -11,6 +11,10 @@ const store = new Vuex.Store({
     localStream: null,
     remoteStream: null,
 
+    isMicEnabled: true,
+    isCameraEnabled: true,
+    isRecordingEnabled: false,
+
     modal: {
       type: constants.MODAL_TYPE.NONE,
       onClose() {},
@@ -24,9 +28,15 @@ const store = new Vuex.Store({
     setPersonalCode: set("personalCode"),
     setFriendCode: set("friendCode"),
     setCallState: set("callState"),
+
     setPeerConnection: set("peerConnection"),
     setLocalStream: set("localStream"),
     setRemoteStream: set("remoteStream"),
+
+    setIsMicEnabled: set("isMicEnabled"),
+    setIsCameraEnabled: set("isCameraEnabled"),
+    setIsRecordingEnabled: set("isRecordingEnabled"),
+
     setModal: set("modal"),
     closeModal(state) {
       state.modal.type = constants.MODAL_TYPE.NONE;

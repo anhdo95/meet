@@ -39,16 +39,14 @@ Vue.component("video-call", {
     </div>
   `,
 
-  data() {
-    return {
-      isMicEnabled: true,
-      isCameraEnabled: true,
-      isRecordingEnabled: false,
-    };
-  },
-
   computed: {
-    ...Vuex.mapState(["localStream", "remoteStream"]),
+    ...Vuex.mapState([
+      "localStream",
+      "remoteStream",
+      "isMicEnabled",
+      "isCameraEnabled",
+      "isRecordingEnabled",
+    ]),
   },
 
   watch: {
@@ -69,16 +67,24 @@ Vue.component("video-call", {
   },
 
   methods: {
+    ...Vuex.mapMutations([
+      "setIsMicEnabled",
+      "setIsCameraEnabled",
+      "setIsRecordingEnabled",
+    ]),
+
     handleMic() {
-      this.isMicEnabled = !this.isMicEnabled;
+      this.localStream.getAudioTracks()[0].enabled = !this.isMicEnabled
+      this.setIsMicEnabled(!this.isMicEnabled);
     },
 
     handleCamera() {
-      this.isCameraEnabled = !this.isCameraEnabled;
+      this.localStream.getVideoTracks()[0].enabled = !this.isCameraEnabled
+      this.setIsCameraEnabled(!this.isCameraEnabled);
     },
 
     handleRecording() {
-      this.isRecordingEnabled = !this.isRecordingEnabled;
+      this.setIsRecordingEnabled(!this.isRecordingEnabled);
     },
   },
 });
