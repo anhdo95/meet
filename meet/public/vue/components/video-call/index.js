@@ -6,7 +6,7 @@ Vue.component("video-call", {
       </div>
 
       <div class="video-call__remote">
-        <video ref="remoteVideo" class="video-call__remote-video" autoplay muted playsinline></video>
+        <video ref="remoteVideo" class="video-call__remote-video" autoplay playsinline></video>
       </div>
 
       <div class="video-call__buttons">
