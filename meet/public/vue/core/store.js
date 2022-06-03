@@ -10,9 +10,11 @@ const store = new Vuex.Store({
     peerConnection: null,
     localStream: null,
     remoteStream: null,
+    screenStream: null,
 
     isMicEnabled: true,
     isCameraEnabled: true,
+    isScreenSharing: false,
     isRecordingEnabled: false,
 
     modal: {
@@ -32,9 +34,11 @@ const store = new Vuex.Store({
     setPeerConnection: set("peerConnection"),
     setLocalStream: set("localStream"),
     setRemoteStream: set("remoteStream"),
+    setScreenStream: set("screenStream"),
 
     setIsMicEnabled: set("isMicEnabled"),
     setIsCameraEnabled: set("isCameraEnabled"),
+    setIsScreenSharing: set("isScreenSharing"),
     setIsRecordingEnabled: set("isRecordingEnabled"),
 
     setModal: set("modal"),
