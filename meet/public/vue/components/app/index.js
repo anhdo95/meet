@@ -91,11 +91,12 @@ Vue.component("app", {
     /**
      * Listen to hangup from the caller or callee
      */
-    wss.onHangUp((data) => {
+     wss.onHangUp((data) => {
       console.log('onHangUp :>> ', data);
       this.handleHangUp();
     });
   },
+  
 
   computed: {
     ...Vuex.mapState({
