@@ -69,6 +69,12 @@ Vue.component("video-call", {
     }
   },
 
+  beforeDestroy() {
+    if (this.screenStream) {
+      this.handleStopSharingScreen();
+    }
+  },
+
   methods: {
     ...Vuex.mapMutations([
       "setScreenStream",

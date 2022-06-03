@@ -25,7 +25,7 @@ Vue.component("app", {
      * Listen to pre-offer from a caller
      */
     wss.onPreOffer(({ callerCode }) => {
-      console.log('onPreOffer :>> ', callerCode);
+      console.log("onPreOffer :>> ", callerCode);
       if (this.callState === constants.CALL_STATE.AVAILABLE) {
         this.setModal({
           type: constants.MODAL_TYPE.INCOMING_CALL,
@@ -72,7 +72,7 @@ Vue.component("app", {
      * Listen to an offer, an answer, or a candidate
      */
     wss.onSignaling((data) => {
-      console.log('onSignaling :>> ', data);
+      console.log("onSignaling :>> ", data);
       switch (data.type) {
         case constants.SIGNALING.OFFER:
           this.handleOffer(data);
@@ -91,12 +91,11 @@ Vue.component("app", {
     /**
      * Listen to hangup from the caller or callee
      */
-     wss.onHangUp((data) => {
-      console.log('onHangUp :>> ', data);
+    wss.onHangUp((data) => {
+      console.log("onHangUp :>> ", data);
       this.handleHangUp();
     });
   },
-  
 
   computed: {
     ...Vuex.mapState({
@@ -119,6 +118,7 @@ Vue.component("app", {
       "setIsCallable",
       "setCallState",
       "setPersonalCode",
+      "setFriendCode",
       "resetButtonsState",
       "setModal",
       "closeModal",
@@ -154,7 +154,7 @@ Vue.component("app", {
           callerCode,
           answer: constants.PRE_OFFER_ANSWER.CALLEE_REJECTED,
         });
-        this.closeModal()
+        this.closeModal();
       };
     },
 
@@ -233,8 +233,10 @@ Vue.component("app", {
 
     handleHangUp() {
       this.peerConnection && this.peerConnection.close();
+      this.setFriendCode(null);
+      this.setPeerCode(null);
       this.setCallState(constants.CALL_STATE.AVAILABLE);
-      this.resetButtonsState();      
+      this.resetButtonsState();
       this.setPeerConnection(null);
       this.setRemoteStream(null);
       this.closeModal();

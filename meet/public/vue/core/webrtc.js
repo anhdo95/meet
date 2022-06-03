@@ -50,6 +50,8 @@ const webrtc = {
   },
 
   replaceTrack(peerConnection, stream, onEnded) {
+    if (!peerConnection) return;
+    
     const videoTrack = stream.getVideoTracks()[0]
     const sender = peerConnection
       .getSenders()
