@@ -48,4 +48,27 @@ const webrtc = {
 
     return peerConnection;
   },
+
+  replaceTrack(peerConnection, stream, onEnded) {
+    const videoTrack = stream.getVideoTracks()[0]
+    const sender = peerConnection
+      .getSenders()
+      .find((sender) => sender.track.kind === videoTrack.kind);
+
+    if (!sender) return
+    
+    sender.replaceTrack(videoTrack)
+    videoTrack.onended = onEnded
+  },
+
+  async startSharingScreen(peerConnection, onEnded) {
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true })
+    webrtc.replaceTrack(peerConnection, stream, onEnded)
+    return stream;
+  },
+
+  stopSharingScreen(peerConnection, screenStream, localStream) {
+    screenStream.getTracks().forEach((track) => track.stop())
+    webrtc.replaceTrack(peerConnection, localStream)
+  }
 };

@@ -1,7 +1,7 @@
 Vue.component("app", {
   template: `
     <main class="app">
-      <video-call v-if="isCallable" />
+      <video-call v-if="isCallable" @hang-up="handleReject" />
       <dashboard v-else />
       <modals />
     </main>
@@ -43,8 +43,8 @@ Vue.component("app", {
     /**
      * Listen to the callee state from the server
      */
-    wss.onPreOfferAnswer(answer => {
-      console.log('onPreOfferAnswer :>> ', answer);
+    wss.onPreOfferAnswer((answer) => {
+      console.log("onPreOfferAnswer :>> ", answer);
       switch (answer) {
         case constants.PRE_OFFER_ANSWER.CALLEE_ACCEPTED:
           this.handleCalleeAccepted();
@@ -105,6 +105,7 @@ Vue.component("app", {
       friendCode: "friendCode",
       callState: "callState",
       peerConnection: "peerConnection",
+      peerCode: "peerCode",
       localStream: "localStream",
     }),
   },
@@ -112,11 +113,13 @@ Vue.component("app", {
   methods: {
     ...Vuex.mapMutations([
       "setPeerConnection",
+      "setPeerCode",
       "setLocalStream",
       "setRemoteStream",
       "setIsCallable",
       "setCallState",
       "setPersonalCode",
+      "resetButtonsState",
       "setModal",
       "closeModal",
     ]),
@@ -138,6 +141,7 @@ Vue.component("app", {
           callerCode,
           answer: constants.PRE_OFFER_ANSWER.CALLEE_ACCEPTED,
         });
+        this.setPeerCode(callerCode);
         this.setCallState(constants.CALL_STATE.UNAVAILABLE);
         this.closeModal();
         this.setIsCallable(true);
@@ -170,7 +174,7 @@ Vue.component("app", {
         offerToReceiveAudio: true,
       });
       await peerConnection.setLocalDescription(offer);
-      console.log('added an offer to local description :>> ', offer);
+      console.log("added an offer to local description :>> ", offer);
 
       webrtc.sendSignaling({
         offer,
@@ -178,6 +182,7 @@ Vue.component("app", {
         type: constants.SIGNALING.OFFER,
       });
 
+      this.setPeerCode(this.friendCode);
       this.setCallState(constants.CALL_STATE.UNAVAILABLE);
       this.closeModal();
       this.setIsCallable(true);
@@ -221,19 +226,18 @@ Vue.component("app", {
      */
     handleReject() {
       webrtc.sendHangUp({
-        peerCode: this.friendCode
+        peerCode: this.peerCode,
       });
-      this.handleHangUp()
+      this.handleHangUp();
     },
 
     handleHangUp() {
-      this.peerConnection && this.peerConnection.close()
+      this.peerConnection && this.peerConnection.close();
       this.setCallState(constants.CALL_STATE.AVAILABLE);
-      // TODO: reset buttons state
-
+      this.resetButtonsState();      
       this.setPeerConnection(null);
       this.setRemoteStream(null);
-      this.closeModal()
+      this.closeModal();
       this.setIsCallable(false);
     },
 
@@ -246,7 +250,7 @@ Vue.component("app", {
 
       const answer = await this.peerConnection.createAnswer();
       await this.peerConnection.setLocalDescription(answer);
-      console.log('added an answer to local description :>> ', answer);
+      console.log("added an answer to local description :>> ", answer);
 
       webrtc.sendSignaling({
         answer,
@@ -265,7 +269,7 @@ Vue.component("app", {
 
     async handleCandidate(candidate) {
       await this.peerConnection.addIceCandidate(candidate);
-      console.log('added candidate to peer connection :>> ', candidate);
+      console.log("added candidate to peer connection :>> ", candidate);
     },
   },
 });

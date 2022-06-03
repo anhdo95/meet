@@ -24,8 +24,8 @@ Vue.component("video-call", {
           <camera-off-icon class="cursor-pointer video-call__icon" @click="handleCamera" />
         </span>
 
-        <hangup-icon class="cursor-pointer video-call__icon video-call__icon--hangup" />
-        <span class="video-call__button">
+        <hangup-icon class="cursor-pointer video-call__icon video-call__icon--hangup" @click="handleHangUp"  />
+        <span class="video-call__button" @click="handleShareScreen">
           <share-screen-icon class="cursor-pointer video-call__icon video-call__icon--share-screen" />
         </span>
 
@@ -39,16 +39,17 @@ Vue.component("video-call", {
     </div>
   `,
 
-  data() {
-    return {
-      isMicEnabled: true,
-      isCameraEnabled: true,
-      isRecordingEnabled: false,
-    };
-  },
-
   computed: {
-    ...Vuex.mapState(["localStream", "remoteStream"]),
+    ...Vuex.mapState([
+      "peerConnection",
+      "localStream",
+      "remoteStream",
+      "screenStream",
+      "isMicEnabled",
+      "isCameraEnabled",
+      "isScreenSharing",
+      "isRecordingEnabled",
+    ]),
   },
 
   watch: {
@@ -64,21 +65,71 @@ Vue.component("video-call", {
 
   mounted() {
     if (this.localStream) {
-      this.$refs.localVideo.srcObject = this.localStream;
+      this.updateLocalVideo(this.localStream);
     }
   },
 
   methods: {
+    ...Vuex.mapMutations([
+      "setScreenStream",
+      "setIsMicEnabled",
+      "setIsCameraEnabled",
+      "setIsScreenSharing",
+      "setIsRecordingEnabled",
+    ]),
+
+    updateLocalVideo(stream) {
+      this.$refs.localVideo.srcObject = stream;
+    },
+
     handleMic() {
-      this.isMicEnabled = !this.isMicEnabled;
+      this.localStream.getAudioTracks()[0].enabled = !this.isMicEnabled;
+      this.setIsMicEnabled(!this.isMicEnabled);
     },
 
     handleCamera() {
-      this.isCameraEnabled = !this.isCameraEnabled;
+      this.localStream.getVideoTracks()[0].enabled = !this.isCameraEnabled;
+      this.setIsCameraEnabled(!this.isCameraEnabled);
+    },
+
+    handleHangUp() {
+      this.$emit('hang-up')
+    },
+
+    handleShareScreen() {
+      // The screen is sharing
+      if (this.screenStream) {
+        this.handleStopSharingScreen();
+        return;
+      }
+
+      this.handleStartSharingScreen();
+    },
+
+    async handleStartSharingScreen() {
+      const screenStream = await webrtc.startSharingScreen(
+        this.peerConnection,
+        this.handleStopSharingScreen
+      );
+      this.updateLocalVideo(screenStream);
+      this.setScreenStream(screenStream);
+    },
+
+    handleStopSharingScreen() {
+      webrtc.stopSharingScreen(
+        this.peerConnection,
+        this.screenStream,
+        this.localStream
+      );
+      this.updateLocalVideo(this.localStream);
+      this.setScreenStream(null);
     },
 
     handleRecording() {
-      this.isRecordingEnabled = !this.isRecordingEnabled;
+      this.isRecordingEnabled
+        ? recorder.stop()
+        : recorder.start(this.remoteStream);
+      this.setIsRecordingEnabled(!this.isRecordingEnabled);
     },
   },
 });
