@@ -122,6 +122,9 @@ Vue.component("video-call", {
     },
 
     handleRecording() {
+      this.isRecordingEnabled
+        ? recorder.stop()
+        : recorder.start(this.remoteStream);
       this.setIsRecordingEnabled(!this.isRecordingEnabled);
     },
   },
