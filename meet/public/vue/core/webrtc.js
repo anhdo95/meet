@@ -11,6 +11,10 @@ const webrtc = {
     wss.emitSignaling(data);
   },
 
+  sendHangUp(data) {
+    wss.emitHangUp(data);
+  },
+
   createPeerConnection({
     peerCode,
     localStream,

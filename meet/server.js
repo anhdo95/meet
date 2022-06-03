@@ -77,6 +77,13 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("hang-up", (data) => {
+    log(`Send hangup to peer ${data.peerCode}`);
+    if (clients.has(data.peerCode)) {
+      socket.to(data.peerCode).emit("hang-up", { ...data, peerCode: socket.id });
+    }
+  });
+
   socket.on("disconnect", () => {
     log(`Socket id ${socket.id} disconnected!`);
     clients.delete(socket.id);

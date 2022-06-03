@@ -24,6 +24,10 @@ const wss = {
     return wss.socket.on('signaling', listener);
   },
 
+  onHangUp(listener) {
+    return wss.socket.on('hang-up', listener);
+  },
+
   emitPreOffer(data) {
     return wss.socket.emit('pre-offer', data)
   },
@@ -34,5 +38,9 @@ const wss = {
 
   emitSignaling(data) {
     return wss.socket.emit('signaling', data)
+  },
+
+  emitHangUp(data) {
+    return wss.socket.emit('hang-up', data)
   }
 };

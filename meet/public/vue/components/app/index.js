@@ -72,7 +72,7 @@ Vue.component("app", {
      * Listen to an offer, an answer, or a candidate
      */
     wss.onSignaling((data) => {
-      console.log('signaling :>> ', data);
+      console.log('onSignaling :>> ', data);
       switch (data.type) {
         case constants.SIGNALING.OFFER:
           this.handleOffer(data);
@@ -87,7 +87,16 @@ Vue.component("app", {
           break;
       }
     });
+
+    /**
+     * Listen to hangup from the caller or callee
+     */
+     wss.onHangUp((data) => {
+      console.log('onHangUp :>> ', data);
+      this.handleHangUp();
+    });
   },
+  
 
   computed: {
     ...Vuex.mapState({
@@ -175,6 +184,7 @@ Vue.component("app", {
     },
 
     handleCalleeRejected() {
+      this.setCallState(constants.CALL_STATE.AVAILABLE);
       this.setModal({
         type: constants.MODAL_TYPE.REJECTED,
         onOk: this.closeModal,
@@ -188,7 +198,7 @@ Vue.component("app", {
     handleCalleeFound() {
       this.setModal({
         type: constants.MODAL_TYPE.CALLING,
-        onReject: () => {},
+        onReject: this.handleReject,
       });
     },
 
@@ -204,6 +214,27 @@ Vue.component("app", {
         type: constants.MODAL_TYPE.UNAVAILABLE,
         onOk: this.closeModal,
       });
+    },
+
+    /**
+     * The caller rejected the call
+     */
+    handleReject() {
+      webrtc.sendHangUp({
+        peerCode: this.friendCode
+      });
+      this.handleHangUp()
+    },
+
+    handleHangUp() {
+      this.peerConnection && this.peerConnection.close()
+      this.setCallState(constants.CALL_STATE.AVAILABLE);
+      // TODO: reset buttons state
+
+      this.setPeerConnection(null);
+      this.setRemoteStream(null);
+      this.closeModal()
+      this.setIsCallable(false);
     },
 
     /**
