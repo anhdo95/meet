@@ -19,7 +19,6 @@ const webrtc = {
     peerCode,
     localStream,
     onAddStream,
-    onRemoveStream,
   }) {
     const peerConnection = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
@@ -39,8 +38,11 @@ const webrtc = {
       console.log("oniceconnectionstatechange :>> ", connectionState);
     };
 
-    peerConnection.onaddstream = ({ stream }) => onAddStream(stream);
-    peerConnection.onremovestream = () => onRemoveStream();
+    const remoteStream = new MediaStream()
+    peerConnection.ontrack = ({ track }) => {
+      remoteStream.addTrack(track)
+      onAddStream(remoteStream);
+    }
 
     localStream.getTracks().forEach((track) => {
       peerConnection.addTrack(track, localStream);

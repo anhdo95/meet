@@ -33,6 +33,7 @@
 
 .video-call__buttons {
   position: absolute;
+  left: 0;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -50,10 +51,6 @@
   align-items: center;
   justify-content: center;
 }
-
-/* .video-call__button--invisible {
-  visibility: hidden;
-} */
 
 .video-call__icon {
   width: 24px;
