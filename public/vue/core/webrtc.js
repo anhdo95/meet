@@ -22,7 +22,7 @@ const webrtc = {
     onRemoveStream,
   }) {
     const peerConnection = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:13902" }],
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
 
     peerConnection.onicecandidate = ({ candidate }) => {
