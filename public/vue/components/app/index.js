@@ -1,6 +1,6 @@
 Vue.component("app", {
   template: `
-    <main class="app">
+    <main class="h-100 app">
       <video-call v-if="isCallable" @hang-up="handleReject" />
       <dashboard v-else />
       <modals />

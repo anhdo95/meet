@@ -1,6 +1,6 @@
 Vue.component("video-call", {
   template: `
-    <div class="video-call">
+    <div class="h-100 video-call">
       <div class="video-call__local">
         <video ref="localVideo" class="video-call__local-video" autoplay muted playsinline></video>
       </div>
