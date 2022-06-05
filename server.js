@@ -87,6 +87,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     log(`Socket id ${socket.id} disconnected!`);
     clients.delete(socket.id);
+    socket.broadcast.emit('disconnected')
   });
 });
 

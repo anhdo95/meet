@@ -8,6 +8,10 @@ const wss = {
     return wss.socket.on("connect", listener);
   },
 
+  onDisconnected(listener) {
+    return wss.socket.on("disconnected", listener);
+  },
+
   onLog(listener) {
     return wss.socket.on("log", listener);
   },

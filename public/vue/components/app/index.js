@@ -95,6 +95,11 @@ Vue.component("app", {
       console.log("onHangUp :>> ", data);
       this.handleHangUp();
     });
+
+    wss.onDisconnected((data) => {
+      console.log("onDisconnected :>> ", data);
+      this.handleHangUp();
+    });
   },
 
   computed: {
