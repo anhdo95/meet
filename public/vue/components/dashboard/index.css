@@ -24,12 +24,18 @@
 .dashboard__video {
   display: block;
   max-width: 150px;
-  min-height: 114.5px;
+  min-height: 185px;
   margin: 0 auto;
   padding: 0.25rem;
   background-color: white;
   border-radius: var(--border-rounded);
   line-height: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .dashboard__video {
+    min-height: 114.5px;
+  }
 }
 
 .dashboard__howto {
