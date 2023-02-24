@@ -1,3 +1,3 @@
 # WebRTC Meet application
 
-Demo: https://f2f-meet.herokuapp.com/
+Demo: https://meet-rtc.onrender.com/
